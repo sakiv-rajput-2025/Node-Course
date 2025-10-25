@@ -3,7 +3,7 @@ const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const multer = require("multer");
 const DB_PATH =
-  "mongodb+srv://demo:demo1234@demo.4em02gr.mongodb.net/airbnb?retryWrites=true&w=majority&appName=DEMO";
+  "YOUR_MONGO_DB_CONNECTION_STRING_HERE";
 
 const storeRouter = require("./routes/storeRouter");
 const hostRouter = require("./routes/hostRouter");
