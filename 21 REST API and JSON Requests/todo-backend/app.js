@@ -2,7 +2,7 @@ const express = require("express");
 const { default: mongoose } = require("mongoose");
 const cors = require("cors");
 const DB_PATH =
-  "mongodb+srv://demo:demo1234@demo.4em02gr.mongodb.net/todo?retryWrites=true&w=majority&appName=DEMO";
+  "YOUR_MONGO_DB_CONNECTION_STRING_HERE";
 
 const todoItemsRouter = require("./routes/todoItemsRouter");
 const errorController = require("./controller/errors");
