@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Home</title>
+  </head>
+  <body>
+    <style>
+      body {
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      }
+      header {
+        margin-bottom: 30px;
+      }
+      h1 {
+        font-size: 2.5rem;
+        color: #22223b;
+        letter-spacing: 1px;
+        font-weight: 700;
+        text-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      }
+      main {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+      form {
+        background: #fff;
+        padding: 40px 36px 32px 36px;
+        border-radius: 18px;
+        box-shadow: 0 8px 32px rgba(34, 34, 59, 0.13);
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        min-width: 340px;
+        max-width: 400px;
+        width: 100%;
+        align-items: stretch;
+      }
+      input[type="text"] {
+        padding: 13px 16px;
+        border: 1.5px solid #bfc9d1;
+        border-radius: 7px;
+        font-size: 1.08rem;
+        background: #f7fafd;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        outline: none;
+      }
+      input[type="text"]:focus {
+        border-color: #4f8cff;
+        box-shadow: 0 0 0 2px #e3f0ff;
+        background: #fff;
+      }
+      button[type="submit"] {
+        margin-top: 10px;
+        background: linear-gradient(90deg, #4f8cff 0%, #38b6ff 100%);
+        color: #fff;
+        font-size: 1.1rem;
+        font-weight: 600;
+        padding: 13px 0;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.10);
+        transition: background 0.2s, transform 0.15s;
+        letter-spacing: 0.5px;
+      }
+      button[type="submit"]:hover, button[type="submit"]:focus {
+        background: linear-gradient(90deg, #357ae8 0%, #2fa4e7 100%);
+        transform: translateY(-2px) scale(1.03);
+      }
+      @media (max-width: 500px) {
+        form {
+          padding: 24px 10px 20px 10px;
+          min-width: unset;
+        }
+        h1 {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+    <header>
+      <h1>Register Your Home</h1>
+    </header>
+    <main>
+      <form action="/host/add-home" method="POST" autocomplete="off">
+        <input type="text" name="home" placeholder="Home Name" required />
+        <input type="text" name="location" placeholder="Location" required />
+        <input type="text" name="price" placeholder="Enter Price per Night" required>
+        <input type="text" name="rating" placeholder="Enter Rating" required>
+        <input type="text" name="photoUrl" placeholder="Enter Photo URL" required>
+        <button type="submit">Add Home</button>
+      </form>
+    </main>
+  </body>
+</html>

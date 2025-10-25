@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Listings</title>
+    <style>
+      :root {
+        --primary: #4f8cff;
+        --primary-dark: #357ae8;
+        --secondary: #38b6ff;
+        --accent: #ffd700;
+        --bg-gradient: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+        --card-shadow: 0 8px 32px rgba(34, 34, 59, 0.13);
+        --card-radius: 18px;
+        --font-main: "Inter", "Segoe UI", Arial, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-main);
+      }
+      body {
+        min-height: 100vh;
+        background: var(--bg-gradient);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0;
+      }
+      header {
+        width: 100%;
+        background: #fff;
+        box-shadow: 0 2px 12px rgba(34, 34, 59, 0.07);
+        padding: 32px 0 18px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-bottom-left-radius: 24px;
+        border-bottom-right-radius: 24px;
+        margin-bottom: 18px;
+      }
+      header h1 {
+        font-size: 2.7rem;
+        color: #22223b;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+        margin-bottom: 8px;
+      }
+      nav {
+        margin-top: 8px;
+        display: flex;
+        gap: 18px;
+      }
+      .nav-btn {
+        text-decoration: none;
+        background: linear-gradient(
+          90deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
+        color: #fff;
+        font-size: 1.08rem;
+        font-weight: 600;
+        padding: 12px 28px;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(79, 140, 255, 0.1);
+        transition: background 0.2s, transform 0.15s;
+        letter-spacing: 0.5px;
+        display: inline-block;
+      }
+      .nav-btn:hover,
+      .nav-btn:focus {
+        background: linear-gradient(
+          90deg,
+          var(--primary-dark) 0%,
+          #2fa4e7 100%
+        );
+        transform: translateY(-2px) scale(1.03);
+      }
+      main {
+        width: 100%;
+        max-width: 1200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 24px;
+        padding: 0 16px 40px 16px;
+      }
+      .section-title {
+        color: #343a40;
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 18px;
+        letter-spacing: 0.5px;
+        text-align: center;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      }
+      .home-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 32px;
+        justify-content: center;
+        margin-top: 10px;
+        width: 100%;
+      }
+      .home-card {
+        background: #fff;
+        border-radius: var(--card-radius);
+        box-shadow: var(--card-shadow);
+        overflow: hidden;
+        width: 340px;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.18s, box-shadow 0.18s;
+        border: 1.5px solid #e0eafc;
+      }
+      .home-card:hover,
+      .home-card:focus-within {
+        transform: translateY(-6px) scale(1.025);
+        box-shadow: 0 12px 32px rgba(34, 34, 59, 0.16);
+        border-color: var(--primary);
+      }
+      .home-card-img-wrap {
+        width: 100%;
+        height: 190px;
+        overflow: hidden;
+        background: #e0eafc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .home-card-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.2s;
+      }
+      .home-card:hover .home-card-img {
+        transform: scale(1.04);
+      }
+      .home-card-content {
+        padding: 22px 20px 18px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .home-card-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #22223b;
+        margin: 0 0 2px 0;
+        letter-spacing: 0.2px;
+      }
+      .home-card-location {
+        font-size: 1.05rem;
+        color: #495057;
+        display: flex;
+        align-items: center;
+        margin-bottom: 6px;
+        gap: 6px;
+      }
+      .home-card-details {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 8px;
+      }
+      .home-card-price {
+        font-size: 1.15rem;
+        color: var(--secondary);
+        font-weight: 600;
+      }
+      .per-night {
+        color: #6c757d;
+        font-size: 0.98rem;
+        font-weight: 400;
+      }
+      .home-card-rating {
+        font-size: 1.08rem;
+        color: var(--accent);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 2px;
+      }
+      .no-homes {
+        color: #6c757d;
+        font-size: 1.15rem;
+        margin-top: 32px;
+        text-align: center;
+      }
+      footer {
+        width: 100%;
+        background: #fff;
+        border-top-left-radius: 24px;
+        border-top-right-radius: 24px;
+        box-shadow: 0 -2px 12px rgba(34, 34, 59, 0.07);
+        padding: 22px 0 12px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: auto;
+      }
+      .footer-text {
+        color: #adb5bd;
+        font-size: 1rem;
+        letter-spacing: 0.2px;
+      }
+      @media (max-width: 900px) {
+        .home-cards {
+          gap: 20px;
+        }
+        .home-card {
+          width: 95vw;
+          max-width: 370px;
+        }
+      }
+      @media (max-width: 600px) {
+        header h1 {
+          font-size: 1.7rem;
+        }
+        .section-title {
+          font-size: 1.2rem;
+        }
+        .home-card {
+          width: 98vw;
+          max-width: 99vw;
+        }
+        main {
+          padding: 0 2vw 30px 2vw;
+        }
+      }
+    </style>
+    <!-- Font Awesome CDN for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Welcome to Home Listings!</h1>
+      <nav>
+        <a href="/host/add-home" class="nav-btn"
+          ><i
+            class="fa fa-plus"
+            aria-hidden="true"
+            style="margin-right: 7px"
+          ></i
+          >Add Home</a
+        >
+        <a href="/" class="nav-btn"
+          ><i
+            class="fa fa-home"
+            aria-hidden="true"
+            style="margin-right: 7px"
+          ></i
+          >Home</a
+        >
+      </nav>
+    </header>
+    <main>
+      <div class="section-title">Here are the registered homes</div>
+      <% if (registeredHomes.length === 0) { %>
+      <div class="no-homes">
+        <i
+          class="fa fa-info-circle"
+          aria-hidden="true"
+          style="color: #38b6ff; margin-right: 6px"
+        ></i>
+        No homes have been registered yet. Be the first to
+        <a
+          href="/host/add-home"
+          style="color: var(--primary); text-decoration: underline"
+          >add a home</a
+        >!
+      </div>
+      <% } else { %>
+      <div class="home-cards">
+        <% registeredHomes.forEach(home => { %>
+        <div class="home-card" tabindex="0">
+          <div class="home-card-img-wrap">
+            <img
+              src="<%= home.photoUrl %>"
+              alt="Photo of <%= home.home %>"
+              class="home-card-img"
+            />
+          </div>
+          <div class="home-card-content">
+            <h3 class="home-card-title"><%= home.home %></h3>
+            <div class="home-card-location">
+              <i
+                class="fa fa-map-marker"
+                aria-hidden="true"
+                style="color: #38b6ff"
+              ></i>
+              <%= home.location %>
+            </div>
+            <div class="home-card-details">
+              <span class="home-card-price"
+                >$<%= home.price %> <span class="per-night">/ night</span></span
+              >
+              <span class="home-card-rating">
+                <i class="fa fa-star" style="color: #ffd700"></i>
+                <%= home.rating %>
+              </span>
+            </div>
+            <div style="display: flex; gap: 12px; margin-top: 10px">
+              <a
+                href="/homes/<%= home._id %>"
+                class="nav-btn book-btn"
+                style="
+                  flex: 1;
+                  font-size: 1.08rem;
+                  padding: 10px 0;
+                  background: var(--primary);
+                  color: #fff;
+                  border: none;
+                  border-radius: 8px;
+                  box-shadow: 0 2px 8px rgba(34, 34, 59, 0.07);
+                  cursor: pointer;
+                  transition: background 0.2s;
+                  font-weight: 600;
+                  letter-spacing: 0.5px;
+                  display: inline-block;
+                  text-align: center;
+                  text-decoration: none;
+                "
+              >
+                <i
+                  class="fa fa-info-circle"
+                  aria-hidden="true"
+                  style="margin-right: 7px; color: var(--accent)"
+                ></i>
+                Details
+              </a>
+              <form action="/favourites" method="post" style="flex: 1">
+                <button
+                  class="nav-btn book-btn"
+                  type="submit"
+                  style="
+                    width: 100%;
+                    font-size: 1.08rem;
+                    padding: 10px 0;
+                    background: var(--primary);
+                    color: #fff;
+                    border: none;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 8px rgba(34, 34, 59, 0.07);
+                    cursor: pointer;
+                    transition: background 0.2s;
+                    font-weight: 600;
+                    letter-spacing: 0.5px;
+                    display: inline-block;
+                    text-align: center;
+                    text-decoration: none;
+                  "
+                >
+                  <i
+                    class="fa fa-heart fav-heart"
+                    aria-hidden="true"
+                    style="margin-right: 7px; color: var(--accent)"
+                  ></i>
+                  Favourite
+                </button>
+                <input type="hidden" name="id" value="<%= home._id %>" />
+              </form>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <% } %>
+    </main>
+    <footer>
+      <div class="footer-text">
+        &copy; <%= new Date().getFullYear() %> Home Listings &mdash; Crafted
+        with <i class="fa fa-heart" style="color: #dc3545"></i>
+      </div>
+    </footer>
+  </body>
+</html>

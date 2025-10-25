@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>With Styled Nav</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      header {
+        width: 100%;
+        background-color: #343a40;
+        padding: 15px 30px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: flex-end;
+        gap: 20px;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: #f8f9fa;
+        padding: 10px 16px;
+        border-radius: 6px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      nav ul li a:hover {
+        background-color: #495057;
+        transform: translateY(-1px);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="/">Go to Home</a></li>
+          <li><a href="/host/add-home">Add Home</a></li>
+        </ul>
+      </nav>
+    </header>
+  </body>
+</html>

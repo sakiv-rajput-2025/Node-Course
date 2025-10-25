@@ -1,0 +1,10 @@
+<% if (errorMessages && errorMessages.length > 0) { %>
+<div class="error-message">
+  <strong>Errors found:</strong>
+  <ul style="margin: 0; padding-left: 1.2em; text-align: left">
+    <% errorMessages.forEach(function(msg) { %>
+    <li><%= msg %></li>
+    <% }); %>
+  </ul>
+</div>
+<% } %>

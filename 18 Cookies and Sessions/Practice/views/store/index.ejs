@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Listings</title>
+    <style>
+      :root {
+        --primary: #4a6cfa;
+        --primary-dark: #3d5be0;
+        --secondary: #38b6ff;
+        --accent: #ffb74d;
+        --text-primary: #2b3445;
+        --text-secondary: #626b7f;
+        --bg-gradient: linear-gradient(135deg, #f5f7ff 0%, #eef8ff 100%);
+        --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        --card-radius: 16px;
+        --font-main: "Inter", "Segoe UI", system-ui, sans-serif;
+        --header-bg: #fff;
+        --card-hover-shadow: 0 15px 40px rgba(74, 108, 250, 0.15);
+        --card-hover-scale: 1.03;
+        --navbar-height: 70px;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-main);
+      }
+      body {
+        min-height: 100vh;
+        background: var(--bg-gradient);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0;
+        color: var(--text-primary);
+      }
+      header {
+        width: 100%;
+        background: var(--header-bg);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        padding: 32px 0 22px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+        margin-bottom: 0;
+      }
+      header h1 {
+        font-size: 2.5rem;
+        color: var(--primary);
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        text-shadow: 0 2px 10px rgba(74, 108, 250, 0.08);
+        margin-bottom: 10px;
+        margin-top: calc(var(--navbar-height) + 20px);
+        text-align: center;
+      }
+      nav.navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background: var(--header-bg);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: var(--navbar-height);
+        padding: 0 16px;
+      }
+      .navbar-list {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        scrollbar-width: none; /* Firefox */
+        max-width: 100%;
+      }
+      .navbar-list::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Edge */
+      }
+      .navbar-item {
+        flex-shrink: 0;
+        margin: 0 5px;
+      }
+      .nav-btn {
+        text-decoration: none;
+        background: var(--primary);
+        color: #fff;
+        font-size: 0.95rem;
+        font-weight: 600;
+        padding: 10px 16px;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(74, 108, 250, 0.18);
+        transition: all 0.2s ease;
+        letter-spacing: 0.2px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+      }
+      .nav-btn.active,
+      .nav-btn[aria-current="page"] {
+        background: var(--primary-dark);
+        box-shadow: 0 4px 16px rgba(74, 108, 250, 0.25);
+        cursor: default;
+        pointer-events: none;
+      }
+      .nav-btn:hover,
+      .nav-btn:focus {
+        background: var(--primary-dark);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(74, 108, 250, 0.25);
+      }
+      main {
+        width: 100%;
+        max-width: 1280px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 36px 24px 60px 24px;
+      }
+      .section-title {
+        color: var(--text-primary);
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 32px;
+        letter-spacing: -0.5px;
+        text-align: center;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      }
+      .home-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 30px;
+        width: 100%;
+      }
+      .home-card {
+        background: #fff;
+        border-radius: var(--card-radius);
+        box-shadow: var(--card-shadow);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        position: relative;
+        height: 100%;
+        border: 1px solid rgba(74, 108, 250, 0.08);
+      }
+      .home-card:hover,
+      .home-card:focus-within {
+        transform: translateY(-6px) scale(var(--card-hover-scale));
+        box-shadow: var(--card-hover-shadow);
+        border-color: var(--primary);
+      }
+      .home-card-img-wrap {
+        width: 100%;
+        height: 220px;
+        overflow: hidden;
+        background: #f8f9fa;
+        position: relative;
+      }
+      .home-card-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s ease;
+      }
+      .home-card:hover .home-card-img {
+        transform: scale(1.05);
+      }
+      .home-card-content {
+        padding: 24px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        flex-grow: 1;
+      }
+      .home-card-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        letter-spacing: -0.3px;
+        line-height: 1.3;
+      }
+      .home-card-location {
+        font-size: 1.05rem;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 4px;
+      }
+      .home-card-details {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+      }
+      .home-card-price {
+        font-size: 1.25rem;
+        color: var(--primary);
+        font-weight: 700;
+      }
+      .per-night {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        font-weight: 500;
+      }
+      .home-card-rating {
+        font-size: 1.1rem;
+        color: var(--text-primary);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background: rgba(255, 183, 77, 0.1);
+        padding: 6px 12px;
+        border-radius: 50px;
+      }
+      .book-btn {
+        margin-top: 16px;
+        width: 100%;
+        padding: 14px 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .book-btn:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(74, 108, 250, 0.2);
+      }
+      .no-homes {
+        color: var(--text-secondary);
+        font-size: 1.2rem;
+        margin-top: 48px;
+        text-align: center;
+        line-height: 1.6;
+        background: white;
+        padding: 30px 40px;
+        border-radius: var(--card-radius);
+        box-shadow: var(--card-shadow);
+      }
+      footer {
+        width: 100%;
+        background: var(--header-bg);
+        border-top-left-radius: 30px;
+        border-top-right-radius: 30px;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
+        padding: 30px 0 20px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: auto;
+      }
+      .footer-text {
+        color: var(--text-secondary);
+        font-size: 1rem;
+        letter-spacing: 0.2px;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 1200px) {
+        .home-cards {
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 24px;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .home-cards {
+          grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+          gap: 20px;
+        }
+        .nav-btn {
+          padding: 8px 14px;
+          font-size: 0.9rem;
+        }
+        header h1 {
+          font-size: 2.2rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .navbar-list {
+          gap: 8px;
+          justify-content: flex-start;
+          padding: 10px 0;
+        }
+        .navbar-item {
+          margin: 0 3px;
+        }
+        .nav-btn {
+          padding: 8px 12px;
+          font-size: 0.85rem;
+        }
+        header h1 {
+          font-size: 2rem;
+          margin-top: calc(var(--navbar-height) + 15px);
+        }
+        .section-title {
+          font-size: 1.7rem;
+          margin-bottom: 24px;
+        }
+        .home-cards {
+          grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        header {
+          padding: 24px 0 18px 0;
+        }
+        header h1 {
+          font-size: 1.8rem;
+          margin-top: calc(var(--navbar-height) + 10px);
+          padding: 0 15px;
+        }
+        .section-title {
+          font-size: 1.5rem;
+          margin-bottom: 20px;
+        }
+        .home-cards {
+          grid-template-columns: 1fr;
+          width: 100%;
+        }
+        main {
+          padding: 20px 16px 40px 16px;
+        }
+        .home-card-img-wrap {
+          height: 200px;
+        }
+        .home-card-title {
+          font-size: 1.3rem;
+        }
+        .no-homes {
+          padding: 24px 20px;
+          font-size: 1.1rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        :root {
+          --navbar-height: 65px;
+        }
+        nav.navbar {
+          padding: 0 10px;
+        }
+        .navbar-list {
+          gap: 6px;
+        }
+        .nav-btn {
+          padding: 7px 10px;
+          font-size: 0.8rem;
+        }
+        header h1 {
+          font-size: 1.6rem;
+        }
+        .section-title {
+          font-size: 1.4rem;
+        }
+        .home-card-content {
+          padding: 20px 16px;
+        }
+        .home-card-img-wrap {
+          height: 180px;
+        }
+      }
+    </style>
+    <!-- Font Awesome CDN for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    />
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li class="navbar-item">
+            <a href="/" class="nav-btn active" aria-current="page">
+              <i
+                class="fa fa-home"
+                aria-hidden="true"
+                style="margin-right: 7px"
+              ></i
+              >Home
+            </a>
+          </li>
+          <% if (isLoggedIn) { %>
+
+          <li class="navbar-item">
+            <a href="/homes" class="nav-btn">
+              <i
+                class="fa fa-list"
+                aria-hidden="true"
+                style="margin-right: 7px"
+              ></i
+              >All Homes
+            </a>
+          </li>
+          <li class="navbar-item">
+            <a href="/favourites" class="nav-btn">
+              <i
+                class="fa fa-heart"
+                aria-hidden="true"
+                style="margin-right: 7px"
+              ></i
+              >Favourites
+            </a>
+          </li>
+          <li class="navbar-item">
+            <a href="/bookings" class="nav-btn">
+              <i
+                class="fa fa-calendar"
+                aria-hidden="true"
+                style="margin-right: 7px"
+              ></i
+              >Bookings
+            </a>
+          </li>
+          <li class="navbar-item">
+            <a href="/host/add-home" class="nav-btn">
+              <i
+                class="fa fa-plus"
+                aria-hidden="true"
+                style="margin-right: 7px"
+              ></i
+              >Add Home
+            </a>
+          </li>
+          <li class="navbar-item">
+            <a href="/host/host-home-list" class="nav-btn">
+              <i
+                class="fa fa-user-circle"
+                aria-hidden="true"
+                style="margin-right: 7px"
+              ></i
+              >Host
+            </a>
+          </li>
+          <% } %> <% if (!isLoggedIn) { %>
+          <li class="navbar-item">
+            <a href="/login" class="nav-btn">
+              <i
+                class="fa fa-sign-in"
+                aria-hidden="true"
+                style="margin-right: 7px"
+              ></i
+              >Login
+            </a>
+          </li>
+          <% } else {%>
+          <form action="/logout" method="POST" style="display: inline">
+            <button type="submit" class="nav-btn">
+              <i
+                class="fa fa-sign-out"
+                aria-hidden="true"
+                style="margin-right: 7px"
+              ></i>
+              Logout
+            </button>
+          </form>
+          <% } %>
+        </ul>
+      </nav>
+      <h1>Welcome to Home Listings!</h1>
+    </header>
+    <main>
+      <div class="section-title">Find Your Perfect Stay</div>
+      <% if (registeredHomes.length === 0) { %>
+      <div class="no-homes">
+        <i
+          class="fa fa-info-circle"
+          aria-hidden="true"
+          style="color: var(--secondary); margin-right: 6px"
+        ></i>
+        No homes have been registered yet. Be the first to
+        <a
+          href="/host/add-home"
+          style="
+            color: var(--primary);
+            text-decoration: underline;
+            font-weight: 500;
+          "
+          >add a home</a
+        >!
+      </div>
+      <% } else { %>
+      <div class="home-cards">
+        <% registeredHomes.forEach(home => { %>
+        <div class="home-card" tabindex="0">
+          <div class="home-card-img-wrap">
+            <img
+              src="<%= home.photoUrl %>"
+              alt="Photo of <%= home.home %>"
+              class="home-card-img"
+            />
+          </div>
+          <div class="home-card-content">
+            <h3 class="home-card-title"><%= home.home %></h3>
+            <div class="home-card-location">
+              <i
+                class="fa fa-map-marker"
+                aria-hidden="true"
+                style="color: var(--secondary)"
+              ></i>
+              <%= home.location %>
+            </div>
+            <div class="home-card-details">
+              <span class="home-card-price"
+                >$<%= home.price %> <span class="per-night">/ night</span></span
+              >
+              <span class="home-card-rating">
+                <i class="fa fa-star" style="color: var(--accent)"></i>
+                <%= home.rating %>
+              </span>
+            </div>
+            <button class="book-btn">
+              <i
+                class="fa fa-calendar-check-o"
+                aria-hidden="true"
+                style="margin-right: 8px"
+              ></i>
+              Book Now
+            </button>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <% } %>
+    </main>
+    <footer>
+      <div class="footer-text">
+        &copy; <%= new Date().getFullYear() %> Home Listings &mdash; All rights
+        reserved
+      </div>
+    </footer>
+  </body>
+</html>

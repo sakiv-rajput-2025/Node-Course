@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Registered Successfully</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
+
+      :root {
+        --primary: #667eea;
+        --primary-dark: #5a67d8;
+        --secondary: #764ba2;
+        --success: #48bb78;
+        --success-light: #68d391;
+        --accent: #f093fb;
+        --white: #ffffff;
+        --gray-50: #f7fafc;
+        --gray-100: #edf2f7;
+        --gray-600: #718096;
+        --gray-700: #4a5568;
+        --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+        --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --gradient-card: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+        --gradient-success: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        --border-radius: 24px;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        min-height: 100vh;
+        background: var(--gradient-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      /* Animated background elements */
+      .bg-decoration {
+        position: absolute;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .circle-1 {
+        width: 300px;
+        height: 300px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        top: -150px;
+        right: -150px;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .circle-2 {
+        width: 200px;
+        height: 200px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 50%;
+        bottom: -100px;
+        left: -100px;
+        animation: float 8s ease-in-out infinite reverse;
+      }
+
+      .circle-3 {
+        width: 150px;
+        height: 150px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 50%;
+        top: 20%;
+        left: 10%;
+        animation: float 7s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(5deg);
+        }
+      }
+
+      .success-container {
+        position: relative;
+        z-index: 10;
+        background: var(--gradient-card);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-2xl);
+        padding: 60px 50px;
+        text-align: center;
+        max-width: 480px;
+        width: 100%;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      @keyframes slideUp {
+        0% {
+          opacity: 0;
+          transform: translateY(50px) scale(0.95);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .success-icon-wrapper {
+        position: relative;
+        margin-bottom: 32px;
+        animation: bounceIn 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.3s both;
+      }
+
+      @keyframes bounceIn {
+        0% {
+          opacity: 0;
+          transform: scale(0.3);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.05);
+        }
+        70% {
+          transform: scale(0.9);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .success-icon {
+        width: 100px;
+        height: 100px;
+        background: var(--gradient-success);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        box-shadow: 0 20px 40px rgba(72, 187, 120, 0.3);
+        position: relative;
+      }
+
+      .success-icon::before {
+        content: "";
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        border: 3px solid rgba(72, 187, 120, 0.2);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(0.8);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1.2);
+          opacity: 0;
+        }
+      }
+
+      .checkmark {
+        width: 40px;
+        height: 40px;
+        color: var(--white);
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .success-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--gray-700);
+        margin-bottom: 16px;
+        letter-spacing: -0.025em;
+        animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
+      }
+
+      .success-subtitle {
+        font-size: 1.125rem;
+        color: var(--gray-600);
+        margin-bottom: 8px;
+        font-weight: 500;
+        animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s both;
+      }
+
+      .success-message {
+        font-size: 1rem;
+        color: var(--gray-600);
+        line-height: 1.6;
+        margin-bottom: 40px;
+        animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s both;
+      }
+
+      @keyframes fadeInUp {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+        animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.7s both;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 16px 32px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        text-decoration: none;
+        transition: var(--transition);
+        cursor: pointer;
+        border: none;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .btn:hover::before {
+        left: 100%;
+      }
+
+      .btn-primary {
+        background: var(--gradient-bg);
+        color: var(--white);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 35px rgba(102, 126, 234, 0.5);
+      }
+
+      .btn-secondary {
+        background: var(--white);
+        color: var(--gray-700);
+        border: 2px solid var(--gray-100);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-secondary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        border-color: var(--primary);
+        color: var(--primary);
+      }
+
+      .btn-icon {
+        font-size: 18px;
+        transition: transform 0.3s ease;
+      }
+
+      .btn:hover .btn-icon {
+        transform: scale(1.1);
+      }
+
+      .features-list {
+        margin-top: 32px;
+        padding-top: 32px;
+        border-top: 1px solid var(--gray-100);
+        animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.8s both;
+      }
+
+      .feature-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+        color: var(--gray-600);
+        font-size: 0.9rem;
+      }
+
+      .feature-icon {
+        width: 20px;
+        height: 20px;
+        background: var(--gradient-success);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--white);
+        font-size: 12px;
+        flex-shrink: 0;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 640px) {
+        .success-container {
+          padding: 40px 30px;
+          margin: 10px;
+        }
+
+        .success-title {
+          font-size: 2rem;
+        }
+
+        .success-subtitle {
+          font-size: 1rem;
+        }
+
+        .action-buttons {
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+          padding: 16px 24px;
+        }
+
+        .circle-1,
+        .circle-2,
+        .circle-3 {
+          display: none;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .success-container {
+          padding: 30px 20px;
+        }
+
+        .success-icon {
+          width: 80px;
+          height: 80px;
+        }
+
+        .success-icon::before {
+          width: 100px;
+          height: 100px;
+        }
+
+        .checkmark {
+          width: 30px;
+          height: 30px;
+          font-size: 20px;
+        }
+
+        .success-title {
+          font-size: 1.75rem;
+        }
+      }
+
+      /* Dark mode support */
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --gradient-card: linear-gradient(145deg, #1a202c 0%, #2d3748 100%);
+          --gray-700: #e2e8f0;
+          --gray-600: #cbd5e0;
+        }
+      }
+    </style>
+    <!-- Font Awesome CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Background decorations -->
+    <div class="bg-decoration circle-1"></div>
+    <div class="bg-decoration circle-2"></div>
+    <div class="bg-decoration circle-3"></div>
+
+    <div class="success-container">
+      <div class="success-icon-wrapper">
+        <div class="success-icon">
+          <i class="fas fa-check checkmark"></i>
+        </div>
+      </div>
+
+      <h1 class="success-title">Registration Complete!</h1>
+      <p class="success-subtitle">Welcome to our community</p>
+      <p class="success-message">
+        Your home has been successfully registered and added to our platform.
+        Thank you for contributing to our growing community of trusted listings.
+      </p>
+
+      <div class="action-buttons">
+        <a href="/" class="btn btn-primary">
+          <i class="fas fa-home btn-icon"></i>
+          Back to Home
+        </a>
+        <a href="/dashboard" class="btn btn-secondary">
+          <i class="fas fa-tachometer-alt btn-icon"></i>
+          View Dashboard
+        </a>
+      </div>
+
+      <div class="features-list">
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <span>Your listing is now protected and verified</span>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-search"></i>
+          </div>
+          <span>Visible to potential renters immediately</span>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">
+            <i class="fas fa-bell"></i>
+          </div>
+          <span>You'll receive notifications for inquiries</span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Add smooth entrance animation
+      document.addEventListener("DOMContentLoaded", function () {
+        // Add interaction feedback
+        const buttons = document.querySelectorAll(".btn");
+        buttons.forEach((button) => {
+          button.addEventListener("click", function (e) {
+            const ripple = document.createElement("span");
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+
+            ripple.style.width = ripple.style.height = size + "px";
+            ripple.style.left = x + "px";
+            ripple.style.top = y + "px";
+            ripple.style.position = "absolute";
+            ripple.style.borderRadius = "50%";
+            ripple.style.background = "rgba(255, 255, 255, 0.5)";
+            ripple.style.transform = "scale(0)";
+            ripple.style.animation = "ripple 0.6s linear";
+            ripple.style.pointerEvents = "none";
+
+            this.appendChild(ripple);
+
+            setTimeout(() => {
+              ripple.remove();
+            }, 600);
+          });
+        });
+
+        // Add CSS for ripple animation
+        const style = document.createElement("style");
+        style.textContent = `
+          @keyframes ripple {
+            to {
+              transform: scale(4);
+              opacity: 0;
+            }
+          }
+        `;
+        document.head.appendChild(style);
+      });
+    </script>
+  </body>
+</html>

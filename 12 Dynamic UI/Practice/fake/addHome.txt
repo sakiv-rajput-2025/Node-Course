@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Home - PropertyHub</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+      :root {
+        --primary-color: #6366f1;
+        --primary-dark: #4f46e5;
+        --secondary-color: #ec4899;
+        --accent-color: #f59e0b;
+        --text-dark: #1f2937;
+        --text-light: #6b7280;
+        --bg-primary: #f8fafc;
+        --bg-white: #ffffff;
+        --border-color: #e5e7eb;
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        --radius-sm: 0.375rem;
+        --radius-md: 0.5rem;
+        --radius-lg: 0.75rem;
+        --radius-xl: 1rem;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      /* Animated background elements */
+      body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+          radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+          radial-gradient(circle at 40% 80%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
+        animation: float 20s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+      }
+
+      .container {
+        background: var(--bg-white);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-xl);
+        overflow: hidden;
+        width: 100%;
+        max-width: 480px;
+        position: relative;
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        padding: 40px 30px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: 
+          radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+        animation: rotate 20s linear infinite;
+      }
+
+      @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+
+      .header-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      .header h1 {
+        color: white;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        letter-spacing: -0.025em;
+      }
+
+      .header p {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1rem;
+        font-weight: 400;
+      }
+
+      .form-container {
+        padding: 40px 30px;
+        background: var(--bg-white);
+      }
+
+      .form-group {
+        margin-bottom: 24px;
+        position: relative;
+      }
+
+      .form-group:last-of-type {
+        margin-bottom: 32px;
+      }
+
+      label {
+        display: block;
+        font-weight: 600;
+        font-size: 0.875rem;
+        color: var(--text-dark);
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+      }
+
+      .input-icon {
+        position: absolute;
+        left: 16px;
+        color: var(--text-light);
+        font-size: 1.125rem;
+        z-index: 2;
+        transition: color 0.3s ease;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 16px 16px 16px 50px;
+        border: 2px solid var(--border-color);
+        border-radius: var(--radius-md);
+        font-size: 1rem;
+        background: var(--bg-white);
+        transition: all 0.3s ease;
+        outline: none;
+        color: var(--text-dark);
+      }
+
+      input[type="text"]:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        transform: translateY(-1px);
+      }
+
+      input[type="text"]:focus + .input-icon,
+      .input-wrapper:hover .input-icon {
+        color: var(--primary-color);
+      }
+
+      .submit-btn {
+        width: 100%;
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+        color: white;
+        padding: 16px 24px;
+        border: none;
+        border-radius: var(--radius-md);
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .submit-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s ease;
+      }
+
+      .submit-btn:hover::before {
+        left: 100%;
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .submit-btn:active {
+        transform: translateY(-1px);
+      }
+
+      .features {
+        background: var(--bg-primary);
+        padding: 20px 30px;
+        border-top: 1px solid var(--border-color);
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        text-align: center;
+      }
+
+      .feature {
+        padding: 16px 8px;
+        border-radius: var(--radius-md);
+        background: white;
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .feature:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .feature-icon {
+        color: var(--primary-color);
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+      }
+
+      .feature-text {
+        font-size: 0.75rem;
+        color: var(--text-light);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 480px) {
+        .container {
+          max-width: 100%;
+          margin: 10px;
+        }
+
+        .header {
+          padding: 30px 20px;
+        }
+
+        .header h1 {
+          font-size: 1.75rem;
+        }
+
+        .form-container {
+          padding: 30px 20px;
+        }
+
+        .features {
+          padding: 15px 20px;
+        }
+
+        .features-grid {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+      }
+
+      /* Loading animation */
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+
+      .loading {
+        animation: pulse 2s ease-in-out infinite;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="header-content">
+          <h1><i class="fas fa-home"></i> PropertyHub</h1>
+          <p>List your property and start earning today</p>
+        </div>
+      </div>
+
+      <div class="form-container">
+        <form action="/host/add-home" method="POST">
+          <div class="form-group">
+            <label for="home">Property Name</label>
+            <div class="input-wrapper">
+              <input type="text" id="home" name="home" placeholder="Beautiful Downtown Apartment" required>
+              <i class="fas fa-building input-icon"></i>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="location">Location</label>
+            <div class="input-wrapper">
+              <input type="text" id="location" name="location" placeholder="New York, NY" required>
+              <i class="fas fa-map-marker-alt input-icon"></i>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="price">Price per Night</label>
+            <div class="input-wrapper">
+              <input type="text" id="price" name="price" placeholder="150" required>
+              <i class="fas fa-dollar-sign input-icon"></i>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="rating">Rating</label>
+            <div class="input-wrapper">
+              <input type="text" id="rating" name="rating" placeholder="4.5" min="0" max="5" step="0.1" required>
+              <i class="fas fa-star input-icon"></i>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="photoUrl">Photo URL</label>
+            <div class="input-wrapper">
+              <input type="text" id="photoUrl" name="photoUrl" placeholder="https://example.com/photo.jpg" required>
+              <i class="fas fa-camera input-icon"></i>
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            <i class="fas fa-plus"></i> Add Property
+          </button>
+        </form>
+      </div>
+
+      <div class="features">
+        <div class="features-grid">
+          <div class="feature">
+            <div class="feature-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="feature-text">Secure</div>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">
+              <i class="fas fa-rocket"></i>
+            </div>
+            <div class="feature-text">Fast</div>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">
+              <i class="fas fa-thumbs-up"></i>
+            </div>
+            <div class="feature-text">Trusted</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Add form validation and enhanced UX
+      document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const inputs = document.querySelectorAll('input[type="text"]');
+        const submitBtn = document.querySelector('.submit-btn');
+
+        // Real-time validation
+        inputs.forEach(input => {
+          input.addEventListener('input', function() {
+            if (this.value.trim() !== '') {
+              this.style.borderColor = 'var(--primary-color)';
+              this.style.backgroundColor = '#f8fffe';
+            } else {
+              this.style.borderColor = 'var(--border-color)';
+              this.style.backgroundColor = 'var(--bg-white)';
+            }
+          });
+
+          input.addEventListener('blur', function() {
+            if (this.value.trim() === '') {
+              this.style.borderColor = '#ef4444';
+              this.style.backgroundColor = '#fef2f2';
+            }
+          });
+        });
+
+        // Form submission enhancement
+        form.addEventListener('submit', function(e) {
+          submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding Property...';
+          submitBtn.disabled = true;
+          
+          // Simple validation
+          let isValid = true;
+          inputs.forEach(input => {
+            if (input.value.trim() === '') {
+              isValid = false;
+              input.style.borderColor = '#ef4444';
+              input.style.backgroundColor = '#fef2f2';
+            }
+          });
+
+          if (!isValid) {
+            e.preventDefault();
+            submitBtn.innerHTML = '<i class="fas fa-plus"></i> Add Property';
+            submitBtn.disabled = false;
+            alert('Please fill in all required fields.');
+          }
+        });
+
+        // Price input formatting
+        const priceInput = document.getElementById('price');
+        priceInput.addEventListener('input', function() {
+          let value = this.value.replace(/[^\d.]/g, '');
+          if (value) {
+            this.value = value;
+          }
+        });
+
+        // Rating input validation
+        const ratingInput = document.getElementById('rating');
+        ratingInput.addEventListener('input', function() {
+          let value = parseFloat(this.value);
+          if (value > 5) this.value = '5';
+          if (value < 0) this.value = '0';
+        });
+      });
+    </script>
+  </body>
+</html>
